@@ -1,0 +1,8 @@
+bookPath = 'MonoBehaviour/hoshishiro_01.book.json'
+chapterPath = 'MonoBehaviour/Chapter01.chapter.json'
+voiceFolder = 'AudioClip'
+CGFolder = 'cg'
+BGFolder = 'bg'
+charsPath = 'data/chars.json'
+BCGsPath = 'data/BCGs.json'
+namesPath = 'data/names.json'
