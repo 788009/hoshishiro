@@ -82,7 +82,7 @@ for data in book:
                     'pic': pic,
                     'char': char,
                     'chs': chs,
-                    #'jp': jp,
+                    'jp': jp,
                     'voice': voice
                 })
 
