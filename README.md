@@ -6,6 +6,10 @@
 
 ## [extractChars.py](https://github.com/788009/hoshishiro/blob/main/extractChars.py)
 
+这个程序不需要拆包获取其他文件
+
+提取指定角色的台本数据，包含中日文本、对应音频和画面，具体可自行提取查看
+
 修改 51 52 行的人名，运行即可，输出在 data/{tgtEng}.json 中，主要角色对照表：
 
 |target|tgtEng|中文|
@@ -30,4 +34,4 @@
 
 ## processxxx.py
 
-生成 data/xxx.py
+生成 data/xxx.py，已生成，无需再次操作
