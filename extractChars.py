@@ -62,7 +62,7 @@ for data in book:
         if tgtEng in strings[10]:
             pic = getPic(rows, idx)
             try:
-                char = names[strings[1].replace('大', '')]
+                char = names[strings[1].replace('大', '') if strings[1] != '大家さん' else strings[1]]
             except:
                 print(strings[1])
             chs = strings[12] \
