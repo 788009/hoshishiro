@@ -6,6 +6,8 @@
 
 仓库只有[原台本文件](https://github.com/788009/hoshishiro/blob/main/MonoBehaviour/hoshishiro_01.book.json)和[文件名对照文件](https://github.com/788009/hoshishiro/blob/main/MonoBehaviour/Chapter01.chapter.json)，其他素材请自行使用 [AssetStudio](https://github.com/Perfare/AssetStudio) 拆包获取，并填入 `bg`、`cg`、`AudioClip` 和 `Texture2D` 中，导出时图片选择 `png` 格式，音频选择 `wav` 格式。
 
+以下所有内容均基于游戏的官中版本，其他版本在一些细节上有所差异，尤其是 `hoshishiro_01.book` 和 `Chapter01.chapter`。
+
 ## 代码说明
 
 ### [extractChars.py](https://github.com/788009/hoshishiro/blob/main/extractChars.py)
@@ -44,7 +46,7 @@
 
 ### processxxx.py
 
-生成其他代码需要用到的 `data/xxx.json`，已生成，无需再次操作。
+从 [Chapter01.chapter.json](https://github.com/788009/hoshishiro/blob/main/MonoBehaviour/Chapter01.chapter.json) 中提取其他代码需要用到的 `data/xxx.json`，已生成，无需再次操作。
 
 ## 拆包细节
 
