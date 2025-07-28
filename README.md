@@ -75,7 +75,7 @@
 
 文件名示例：`kar0001`，表示狩叶的第一条语音，`kar` 是狩叶对应的 `tgtEng` 的前三个字母，其他角色同理。
 
-有些语音名字后有 `_b`，如 `noi0416_b`，可能是配音时改动重新配的音（来自[贴吧](https://tieba.baidu.com/p/7474577881)）。
+有些语音名字后有 `_b`，如 `noi0416_b`，可能是配音时改动重新配的音（参考[贴吧](https://tieba.baidu.com/p/7474577881)）。
 
 数字大于等于 `6000` 的，如 `kar6000`，是游戏[各个宣传片](https://www.youtube.com/watch?v=MEJC0FsCido&list=PL-PtwSDik6nTAPjGgkBUGY8IMr9A4LAUx)中的语音。
 
