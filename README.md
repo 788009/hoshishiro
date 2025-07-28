@@ -1,5 +1,7 @@
 # hoshishiro
 
+[游戏官方网站](http://shiratamaco.com/)
+
 初衷是做[这些视频](https://space.bilibili.com/476232350/lists/5105429)。
 
 仓库只有[原台本文件](https://github.com/788009/hoshishiro/blob/main/MonoBehaviour/hoshishiro_01.book.json)和[文件名对照文件](https://github.com/788009/hoshishiro/blob/main/MonoBehaviour/Chapter01.chapter.json)，其他素材请自行使用 [AssetStudio](https://github.com/Perfare/AssetStudio) 拆包获取，并填入 `bg`、`cg`、`AudioClip` 和 `Texture2D` 中，导出时图片选择 `png` 格式，音频选择 `wav` 格式。
