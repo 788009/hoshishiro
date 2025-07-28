@@ -3,6 +3,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 from moviepy import ImageClip, concatenate_videoclips, AudioFileClip
 import traceback
+import numpy as np
 
 # 读取数据
 import json
@@ -23,6 +24,46 @@ FRAME_INTERVAL = 0.5  # 前后段间隔时间（秒）
 # 加载字体
 font_name = ImageFont.truetype(FONT_PATH, 25)  # 用于角色名字
 font_text = ImageFont.truetype(FONT_PATH, 25)  # 用于对话内容
+
+def paste_with_preserve_bg_alpha(bg, fg, position):
+    bg = bg.convert("RGBA")
+    fg = fg.convert("RGBA")
+
+    x, y = position
+    bw, bh = bg.size
+    fw, fh = fg.size
+
+    # ==== 1. 计算裁剪区域 ====
+    # 背景区域
+    bg_x1 = max(x, 0)
+    bg_y1 = max(y, 0)
+    bg_x2 = min(x + fw, bw)
+    bg_y2 = min(y + fh, bh)
+
+    if bg_x1 >= bg_x2 or bg_y1 >= bg_y2:
+        return bg  # 完全在画布外，不需要合成
+
+    # 前景区域
+    fg_x1 = bg_x1 - x
+    fg_y1 = bg_y1 - y
+    fg_x2 = fg_x1 + (bg_x2 - bg_x1)
+    fg_y2 = fg_y1 + (bg_y2 - bg_y1)
+
+    # ==== 2. 转 numpy ====
+    bg_arr = np.array(bg, dtype=np.float32)
+    fg_arr = np.array(fg, dtype=np.float32)
+
+    sub_bg = bg_arr[bg_y1:bg_y2, bg_x1:bg_x2, :]
+    sub_fg = fg_arr[fg_y1:fg_y2, fg_x1:fg_x2, :]
+
+    # ==== 3. Alpha 混合（保持 bg alpha 不变）====
+    fg_alpha = sub_fg[..., 3:4] / 255.0
+    sub_bg[..., :3] = sub_fg[..., :3] * fg_alpha + sub_bg[..., :3] * (1 - fg_alpha)
+    # sub_bg[..., 3] 保持不变
+
+    # ==== 4. 放回去 ====
+    bg_arr[bg_y1:bg_y2, bg_x1:bg_x2, :] = sub_bg
+    return Image.fromarray(bg_arr.astype(np.uint8), "RGBA")
 
 def draw_text_with_border(draw, position, text, font, fill, border_color='black', border_width=0.7, line_spacing=5):
     x, y = position
@@ -104,39 +145,50 @@ def generate_frame(entry):
             char_img = char_img.crop((0, 40, w, h))
 
         # 合成角色和背景
-        bg.paste(char_img, (VIDEO_RESOLUTION[0] // 2 - char_img.width // 2, 0), char_img)
+        bg = paste_with_preserve_bg_alpha(
+            bg,
+            char_img,
+            (VIDEO_RESOLUTION[0] // 2 - char_img.width // 2, 0)
+        )
+        #bg.paste(char_img, (VIDEO_RESOLUTION[0] // 2 - char_img.width // 2, 0), char_img)
 
     # 添加对话框
     dialogue_box = create_dialogue_box(char_name, text)
-    bg.paste(dialogue_box, (0, VIDEO_RESOLUTION[1] - dialogue_box.height), dialogue_box)
+    bg = paste_with_preserve_bg_alpha(
+        bg,
+        dialogue_box,
+        (0, VIDEO_RESOLUTION[1] - dialogue_box.height)
+    )
+    #bg.paste(dialogue_box, (0, VIDEO_RESOLUTION[1] - dialogue_box.height), dialogue_box)
 
     return bg, voice_path
 
-# 主逻辑
-clips = []
-for entry in data:
-    try:
-        frame, voice_path = generate_frame(entry)
+if __name__ == '__main__':
+    # 主逻辑
+    clips = []
+    for entry in data:
+        try:
+            frame, voice_path = generate_frame(entry)
 
-        # 保存帧为临时图像
-        temp_frame_path = "temp_frame.png"
-        frame.save(temp_frame_path)
+            # 保存帧为临时图像
+            temp_frame_path = "temp_frame.png"
+            frame.save(temp_frame_path)
 
-        # 创建视频剪辑
-        image_clip = ImageClip(temp_frame_path)
-        if voice_path:
-            audio_clip = AudioFileClip(voice_path)
-            image_clip = image_clip.with_audio(audio_clip)
-        image_clip = image_clip.with_duration(audio_clip.duration)
+            # 创建视频剪辑
+            image_clip = ImageClip(temp_frame_path)
+            if voice_path:
+                audio_clip = AudioFileClip(voice_path)
+                image_clip = image_clip.with_audio(audio_clip)
+            image_clip = image_clip.with_duration(audio_clip.duration)
 
-        blank_frame = ImageClip(temp_frame_path).with_duration(FRAME_INTERVAL / 2)
+            blank_frame = ImageClip(temp_frame_path).with_duration(FRAME_INTERVAL / 2)
 
-        clips.extend([blank_frame, image_clip, blank_frame])
-    except Exception as e:
-        traceback.print_exc()
-        input()
-    #input('next')
-    
-# 合并所有剪辑
-final_video = concatenate_videoclips(clips, method="compose")
-final_video.write_videofile(OUTPUT_VIDEO, fps=24)
+            clips.extend([blank_frame, image_clip, blank_frame])
+        except Exception as e:
+            traceback.print_exc()
+            input()
+        #input('next')
+        
+    # 合并所有剪辑
+    final_video = concatenate_videoclips(clips, method="compose")
+    final_video.write_videofile(OUTPUT_VIDEO, fps=24)
