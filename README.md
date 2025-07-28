@@ -14,7 +14,7 @@
 
 这个程序不需要拆包获取其他文件。
 
-提取指定角色的台本数据，包含中日文本、对应音频和画面，具体可自行提取查看。
+提取指定角色的台本数据，包含中日文本、对应音频和画面，具体格式可自行提取查看。
 
 修改 51、52 行的人名，运行即可，输出在 `data/{tgtEng}.json` 中，主要角色对照表：
 
@@ -36,7 +36,13 @@
 
 ### [stable.py](https://github.com/788009/hoshishiro/blob/main/stable.py)
 
-生成视频的核心代码，修改第 9 行的文件名，并在 `bg`、`cg`、`AudioClip` 和 `Texture2D` 中填入相应的素材，运行即可。
+生成视频的核心代码，从一个 JSON 文件中读取画面信息，并使用各文件夹内的素材，合成视频，该 JSON 文件内数据的格式与 `extractChars.py` 的输出相同。
+
+修改第 9 行的文件路径，并在 `bg`、`cg`、`AudioClip` 和 `Texture2D` 中填入相应的素材，运行即可。
+
+台词背景为 `data/message.png`，对应包内图片 `window_messageName`，但与原图尺寸略有不同，因此请勿改动。
+
+字体使用 `STZHONGS.TTF`，请确保存在路径 `C:\Windows\Fonts\STZHONGS.TTF`，或者更改第 20 行 `FONT_PATH` 的值。
 
 若要生成主要角色的所有语音，耗时可能极长，且对电脑内存有要求。
 
@@ -192,7 +198,7 @@
 
 #### 其他
 
-`stable.py` 中还需要用到 `window_message` 和 `window_name` 两张图片，分别为台词背景和人名背景。
+`stable.py` 中还需要用到 `window_messageName`，即台词背景。
 
 ## 声明
 
