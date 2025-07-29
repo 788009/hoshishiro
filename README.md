@@ -26,10 +26,10 @@
 |:-:|:-:|:-:|
 | ノワール | noir | 诺瓦 |
 | カルハ | karuha | 狩叶 |
-| ねり | ner i| 音理 |
+| ねり | neri | 音理 |
 | ジビエ | jibie | 野鸟 |
 | 花江 | hanae | 花江 |
-| タカセ | takase | 鹰世| 
+| タカセ | takase | 鹰世 |
 | 真白 | mashiro | 真白 |
 
 无法提取男主的台词，因为最粗（最表层）的定位是 `if tgtEng in strings[10]`，而 `strings[10]` 是音频文件名，男主此项为空。
