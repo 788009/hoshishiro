@@ -7,7 +7,7 @@ import numpy as np
 
 # 读取数据
 import json
-with open("data/temp.json", "r", encoding="utf-8") as f:
+with open("data/example.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # 全局变量
@@ -94,7 +94,7 @@ def draw_bold_text(draw, position, text, font, fill, thickness=2, line_spacing=5
                     draw.text((x + dx * 0.1, y + dy * 0.1), line, font=font, fill=fill)
         # 绘制原始文字
         draw.text((x, y), line, font=font, fill=fill)
-        # 更新y坐标，加上行高和行距
+        # 更新 y 坐标，加上行高和行距
         y += font.getbbox(line)[1] + line_spacing
 
 # 创建对话框

@@ -1,0 +1,44 @@
+[
+    {
+        "pic":
+        {
+            "type": "bg",
+            "bg": "bg000a.png"
+        },
+        "char": "音理",
+        "chs": "呜~，谁叫小猫那么害怕。",
+        "voice": "ner0007.wav"
+    },
+    {
+        "pic":
+        {
+            "type": "bg",
+            "bg": "bg000a.png"
+        },
+        "char": "音理",
+        "chs": "呀。",
+        "voice": "ner0008.wav"
+    },
+    {
+        "pic":
+        {
+            "type": "normal",
+            "char": "ねり大",
+            "illust": "large_neri_09face.png",
+            "bg": "bg_white.png"
+        },
+        "char": "音理",
+        "chs": "真是的，哥哥，\n要是没我你该怎么办啊。",
+        "voice": "ner0029.wav"
+    },
+    {
+        "pic":
+        {
+            "type": "cg",
+            "cg": "large_evcg02d.png"
+        },
+        "char": "音理",
+        "chs": "圣诞快乐。",
+        "voice": "ner0042.wav"
+    }
+]
